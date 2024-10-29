@@ -41,4 +41,4 @@ jobs:
 
           DATA_FACTORY_ID=$(az datafactory show --name $DATA_FACTORY_NAME --resource-group $RESOURCE_GROUP --subscription $AZURE_SUBSCRIPTION_ID --query "id" -o tsv)
 
-          az rest --method post --uri "$DATA_FACTORY_ID/pipelines/<PostgreSQL_to_Data_Lake_Sync>/createRun?api-version=2018-06-01"
+          az rest --method post --uri "$DATA_FACTORY_ID/pipelines/PostgreSQL_to_Data_Lake_Sync/createRun?api-version=2018-06-01"
