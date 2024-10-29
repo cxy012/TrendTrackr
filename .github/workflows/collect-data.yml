@@ -27,3 +27,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DB_URL: ${{ secrets.DB_URL }}
+
+      - name: Trigger Azure Data Factory Pipeline
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+          DATA_FACTORY_NAME: ${{ secrets.DATA_FACTORY_NAME }}
+        run: |
+          az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+
+          DATA_FACTORY_ID=$(az datafactory show --name $DATA_FACTORY_NAME --resource-group $RESOURCE_GROUP --subscription $AZURE_SUBSCRIPTION_ID --query "id" -o tsv)
+
+          az rest --method post --uri "$DATA_FACTORY_ID/pipelines/<PostgreSQL_to_Data_Lake_Sync>/createRun?api-version=2018-06-01"
