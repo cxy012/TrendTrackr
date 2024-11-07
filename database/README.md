@@ -6,6 +6,12 @@ This database schema is designed to support the GitHub Data Analysis Project, a 
 
 The database consists of several tables, each designed to store different types of GitHub events. Below is a detailed description of each table, its purpose, and its fields.
 
+## Entity Relationship Diagram (ERD)
+
+The database schema is designed with relationships between different tables, such as the connection between `events` and `push_events`, or `push_events` and `commits`. These relationships help establish connections across different types of GitHub activities.
+
+![Database ERD Diagram](./ERD.png)
+
 ## Tables and Relationships
 
 ### 1. `events`
@@ -72,9 +78,3 @@ This table stores information related to GitHub trending repositories, including
   - `forks` (INT, NOT NULL): Number of times the repository has been forked.
   - `language` (VARCHAR, NOT NULL): Programming language used in the repository.
   - `created_at` (TIMESTAMPTZ, NOT NULL): Timestamp of when the trending data was recorded.
-
-## Entity Relationship Diagram (ERD)
-
-The database schema is designed with relationships between different tables, such as the connection between `events` and `push_events`, or `push_events` and `commits`. These relationships help establish connections across different types of GitHub activities.
-
-![Database ERD Diagram](./ERD.png)
